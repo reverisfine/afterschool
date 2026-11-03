@@ -1,0 +1,484 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>회계 자격증 방과후수업 안내 · 신청</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css">
+<style>
+  :root{
+    --ink:#14213d; --ink-2:#3d4a66; --muted:#7a859c; --line:#e3e7ef; --bg:#f5f7fb; --card:#fff;
+    --kcl:#2f5bea; --kcl-soft:#eaf0ff; --fat:#0f9d74; --fat-soft:#e4f6ef;
+    --warn:#d9480f; --warn-soft:#fff1e8; --radius:16px;
+  }
+  *{box-sizing:border-box}
+  body{margin:0;font-family:Pretendard,-apple-system,"Apple SD Gothic Neo","Malgun Gothic",sans-serif;color:var(--ink);background:var(--bg);line-height:1.55;-webkit-font-smoothing:antialiased}
+  a{color:inherit}
+  .wrap{max-width:980px;margin:0 auto;padding:0 20px}
+  header.hero{background:var(--ink);color:#fff;padding:44px 0 88px}
+  .hero .eyebrow{font-size:13px;letter-spacing:.08em;opacity:.7;font-weight:600}
+  .hero h1{font-size:clamp(26px,4.4vw,38px);margin:8px 0 10px;font-weight:800;letter-spacing:-.02em}
+  .hero p{margin:0;opacity:.82;font-size:15px}
+  .hero .today{display:inline-block;margin-top:18px;font-size:13px;background:rgba(255,255,255,.1);padding:6px 12px;border-radius:999px}
+  main{margin-top:-60px;padding-bottom:60px}
+  .grid2{display:grid;grid-template-columns:1fr 1fr;gap:18px}
+  @media (max-width:760px){.grid2{grid-template-columns:1fr}}
+  .card{background:var(--card);border-radius:var(--radius);box-shadow:0 1px 2px rgba(20,33,61,.05),0 8px 24px rgba(20,33,61,.06);padding:24px}
+  .exam{border-top:5px solid var(--c)}
+  .exam .tag{display:inline-flex;gap:6px;align-items:center;font-size:12px;font-weight:700;color:var(--c);background:var(--soft);padding:4px 10px;border-radius:999px}
+  .exam h2{margin:10px 0 2px;font-size:22px;letter-spacing:-.01em}
+  .exam .org{font-size:13px;color:var(--muted)}
+  .rows{margin:18px 0 16px;display:grid;gap:12px}
+  .row{display:grid;grid-template-columns:96px 1fr auto;gap:10px;align-items:start;padding-bottom:12px;border-bottom:1px dashed var(--line)}
+  .row:last-child{border-bottom:0;padding-bottom:0}
+  .row .k{font-size:13px;color:var(--muted);font-weight:600;padding-top:1px}
+  .row .v{font-size:15px;font-weight:600}
+  .row .v small{display:block;font-weight:500;color:var(--ink-2);font-size:13px}
+  .chip{font-size:12px;font-weight:700;padding:3px 9px;border-radius:999px;white-space:nowrap;background:#eef1f6;color:var(--ink-2)}
+  .chip.now{background:var(--soft);color:var(--c)}
+  .chip.hot{background:var(--warn-soft);color:var(--warn)}
+  .chip.done{background:#f1f2f4;color:#a0a7b4}
+  .exam .foot{display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap;margin-top:6px}
+  .count{font-size:13px;color:var(--ink-2)}
+  .count b{color:var(--c);font-size:16px}
+  .btn{appearance:none;border:0;cursor:pointer;font:inherit;font-weight:700;font-size:14px;padding:11px 18px;border-radius:12px;background:var(--ink);color:#fff;transition:transform .08s,opacity .15s}
+  .btn:active{transform:scale(.98)}
+  .btn[disabled]{opacity:.4;cursor:not-allowed}
+  .btn.c{background:var(--c)}
+  .btn.ghost{background:#fff;color:var(--ink);border:1px solid var(--line)}
+  .btn.sm{padding:7px 12px;font-size:13px;border-radius:10px}
+  .ext{font-size:13px;color:var(--c);font-weight:600;text-decoration:none}
+  .ext:hover{text-decoration:underline}
+  section{margin-top:28px}
+  section > h3{font-size:19px;margin:0 0 12px;letter-spacing:-.01em}
+  /* timeline */
+  .tl{list-style:none;margin:0;padding:0}
+  .tl li{display:grid;grid-template-columns:118px 14px 1fr;gap:12px;align-items:center;padding:9px 0;position:relative}
+  .tl .d{font-size:14px;font-weight:700;text-align:right;color:var(--ink-2)}
+  .tl .dot{width:12px;height:12px;border-radius:50%;background:var(--c);box-shadow:0 0 0 4px var(--soft);justify-self:center}
+  .tl li::before{content:"";position:absolute;left:136px;top:0;bottom:0;width:2px;background:var(--line);z-index:0}
+  .tl li:first-child::before{top:50%} .tl li:last-child::before{bottom:50%}
+  .tl .dot{position:relative;z-index:1}
+  .tl .t{font-size:14px}
+  .tl .t b{color:var(--c)}
+  .tl li.past{opacity:.45}
+  .tl li.today-mark .d{color:var(--warn)}
+  .tl li.today-mark .dot{background:var(--warn);box-shadow:0 0 0 4px var(--warn-soft)}
+  @media (max-width:520px){.tl li{grid-template-columns:92px 14px 1fr}.tl li::before{left:110px}}
+  /* form */
+  .pick{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+  @media (max-width:560px){.pick{grid-template-columns:1fr}}
+  .opt{position:relative;display:block;border:2px solid var(--line);border-radius:14px;padding:14px 14px 14px 46px;cursor:pointer;transition:border-color .15s,background .15s}
+  .opt input{position:absolute;left:16px;top:17px;width:18px;height:18px;accent-color:var(--c)}
+  .opt b{display:block;font-size:15px}
+  .opt span{font-size:13px;color:var(--ink-2)}
+  .opt:has(input:checked){border-color:var(--c);background:var(--soft)}
+  .opt.closed{opacity:.5;cursor:not-allowed}
+  .opt .closed-note{display:block;color:var(--warn);font-weight:700;font-size:12px;margin-top:2px}
+  .fields{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-top:16px}
+  .fields .full{grid-column:1/-1}
+  .fields .half{grid-column:span 2}
+  @media (max-width:560px){.fields{grid-template-columns:repeat(3,1fr)}.fields .half,.fields .nmf{grid-column:1/-1}.row{grid-template-columns:70px 1fr auto}}
+  label.f{display:block;font-size:13px;font-weight:700;color:var(--ink-2);margin-bottom:6px}
+  input[type=text],select,textarea{width:100%;font:inherit;font-size:15px;padding:11px 12px;border:1px solid var(--line);border-radius:10px;background:#fff;color:var(--ink)}
+  input[type=text]:focus,select:focus,textarea:focus{outline:2px solid var(--kcl);outline-offset:-1px;border-color:transparent}
+  textarea{resize:vertical;min-height:72px}
+  .radios{display:flex;gap:8px;flex-wrap:wrap}
+  .radios label{display:inline-flex;align-items:center;gap:6px;padding:8px 12px;border:1px solid var(--line);border-radius:10px;font-size:14px;cursor:pointer}
+  .radios label:has(input:checked){border-color:var(--ink);background:#f0f2f7;font-weight:700}
+  .agree{display:flex;gap:10px;align-items:flex-start;font-size:14px;margin-top:16px;padding:12px 14px;background:#f7f8fb;border-radius:10px}
+  .agree input{margin-top:4px;width:16px;height:16px}
+  .actions{display:flex;gap:10px;align-items:center;margin-top:18px;flex-wrap:wrap}
+  .msg{font-size:14px;font-weight:600}
+  .msg.err{color:var(--warn)} .msg.ok{color:var(--fat)}
+  .sid{font-size:13px;color:var(--muted)}
+  /* lookup */
+  .lookup{display:grid;grid-template-columns:1fr 1fr 1fr 1.4fr auto;gap:10px;align-items:end}
+  @media (max-width:640px){.lookup{grid-template-columns:1fr 1fr 1fr}.lookup .nm{grid-column:1/3}}
+  .result{margin-top:14px;display:grid;gap:10px}
+  .ritem{display:flex;justify-content:space-between;align-items:center;gap:10px;padding:12px 14px;border:1px solid var(--line);border-radius:12px;border-left:5px solid var(--c)}
+  .ritem .rt{font-weight:700}
+  .ritem .rs{font-size:13px;color:var(--ink-2)}
+  .ritem.cancel{opacity:.55;border-left-color:#c3c8d2}
+  .notice{font-size:13px;color:var(--ink-2);background:#fff;border:1px solid var(--line);border-radius:12px;padding:14px 16px}
+  .notice ul{margin:6px 0 0;padding-left:18px}
+  .demo{background:#fff8db;color:#7a5b00;border:1px solid #f2df98;font-size:13px;padding:10px 14px;border-radius:10px;margin-bottom:14px}
+  footer{text-align:center;color:var(--muted);font-size:12px;padding:20px 0 40px}
+  /* modal */
+  .modal{position:fixed;inset:0;background:rgba(20,33,61,.45);display:none;align-items:center;justify-content:center;padding:20px;z-index:50}
+  .modal.show{display:flex}
+  .modal .box{background:#fff;border-radius:18px;max-width:420px;width:100%;padding:26px;text-align:center}
+  .modal .ic{width:56px;height:56px;border-radius:50%;margin:0 auto 12px;display:grid;place-items:center;font-size:28px;background:var(--fat-soft);color:var(--fat)}
+  .modal h4{margin:0 0 6px;font-size:19px}
+  .modal p{margin:0 0 18px;color:var(--ink-2);font-size:14px;white-space:pre-line}
+  .kcl{--c:var(--kcl);--soft:var(--kcl-soft)} .fat{--c:var(--fat);--soft:var(--fat-soft)}
+</style>
+</head>
+<body>
+
+<header class="hero">
+  <div class="wrap">
+    <div class="eyebrow" id="schoolName">한국디지털미디어고등학교 · e-비즈니스과</div>
+    <h1>회계 자격증 방과후수업 안내 · 신청</h1>
+    <p>12월 전산회계2급 · FAT2급 시험 대비 집중 방과후수업입니다. 회차별로 신청해 주세요.</p>
+    <span class="today" id="todayLabel"></span>
+  </div>
+</header>
+
+<main class="wrap">
+  <div class="grid2" id="examCards"></div>
+
+  <section class="card">
+    <h3>한눈에 보는 일정</h3>
+    <ul class="tl" id="timeline"></ul>
+  </section>
+
+  <section class="card" id="apply">
+    <h3>방과후수업 신청</h3>
+    <div class="demo" id="demoBanner" hidden>미리보기 모드입니다. 신청 내용이 이 브라우저에만 저장됩니다. (구글 시트 연결 전)</div>
+    <form id="applyForm" novalidate>
+      <label class="f">신청 회차 <span class="sid">(중복 선택 가능)</span></label>
+      <div class="pick" id="sessionPick"></div>
+
+      <div class="fields">
+        <div><label class="f" for="grade">학년</label><select id="grade" required></select></div>
+        <div><label class="f" for="klass">반</label><select id="klass" required></select></div>
+        <div><label class="f" for="num">번호</label><select id="num" required></select></div>
+        <div class="nmf"><label class="f" for="name">이름</label><input type="text" id="name" maxlength="20" autocomplete="name" required></div>
+
+        <div class="full">
+          <label class="f">자격시험 원서접수 여부</label>
+          <div class="radios" id="regStatus">
+            <label><input type="radio" name="reg" value="접수 완료"> 접수 완료</label>
+            <label><input type="radio" name="reg" value="접수 예정" checked> 접수 예정</label>
+            <label><input type="radio" name="reg" value="미정"> 아직 고민 중</label>
+          </div>
+        </div>
+        <div class="full">
+          <label class="f" for="memo">선생님께 하고 싶은 말 <span class="sid">(선택)</span></label>
+          <textarea id="memo" maxlength="300" placeholder="예: 분개가 어려워요 / 화요일은 동아리 때문에 늦을 수 있어요"></textarea>
+        </div>
+      </div>
+
+      <label class="agree"><input type="checkbox" id="agree"> <span>신청한 회차의 방과후수업 일정에 성실히 참여하고, 시험 원서접수는 본인이 기간 내에 직접 진행하겠습니다.</span></label>
+
+      <div class="actions">
+        <button class="btn" type="submit" id="submitBtn">신청하기</button>
+        <span class="sid" id="sidPreview"></span>
+        <span class="msg" id="formMsg"></span>
+      </div>
+    </form>
+  </section>
+
+  <section class="card">
+    <h3>내 신청 확인 · 취소</h3>
+    <div class="lookup">
+      <div><label class="f" for="lgrade">학년</label><select id="lgrade"></select></div>
+      <div><label class="f" for="lklass">반</label><select id="lklass"></select></div>
+      <div><label class="f" for="lnum">번호</label><select id="lnum"></select></div>
+      <div class="nm"><label class="f" for="lname">이름</label><input type="text" id="lname" maxlength="20"></div>
+      <button class="btn ghost" id="lookupBtn" type="button">조회</button>
+    </div>
+    <div class="result" id="lookupResult"></div>
+  </section>
+
+  <section class="notice">
+    <b>안내</b>
+    <ul>
+      <li>방과후수업 신청과 <b>자격시험 원서접수는 별개</b>입니다. 원서접수는 각 시험 주관처 홈페이지에서 본인이 직접 해야 합니다.</li>
+      <li>신청 마감 후 변경·취소는 담당 선생님께 직접 말씀해 주세요.</li>
+      <li id="contactLine">문의: e-비즈니스과 강은솔 선생님</li>
+    </ul>
+  </section>
+</main>
+
+<footer id="footer"></footer>
+
+<div class="modal" id="modal" role="dialog" aria-modal="true">
+  <div class="box">
+    <div class="ic" id="modalIc">✓</div>
+    <h4 id="modalTitle"></h4>
+    <p id="modalBody"></p>
+    <button class="btn" id="modalClose" type="button">확인</button>
+  </div>
+</div>
+
+<script>
+/* =========================================================
+   설정 — 여기만 고치면 됩니다
+   ========================================================= */
+const CONFIG = {
+  // Apps Script 웹 앱 배포 URL (…/exec). 비워 두면 미리보기 모드로 동작합니다.
+  SCRIPT_URL: "",
+  SCHOOL: "한국디지털미디어고등학교 · e-비즈니스과",
+  CONTACT: "문의: e-비즈니스과 강은솔 선생님",
+  GRADES: [1, 2, 3],
+  CLASSES: 6,      // 반 수
+  NUMBERS: 30,     // 번호 최대
+  SESSIONS: [
+    {
+      id: "KCL2-129", cls: "kcl",
+      exam: "전산회계 2급", round: "제129회", org: "한국세무사회 주관",
+      site: "https://license.kacpta.or.kr",
+      regStart: "2026-11-05", regEnd: "2026-11-11",
+      examDate: "2026-12-05", examTime: "12:30 ~ 13:30",
+      classStart: "2026-11-30", classEnd: "2026-12-04",
+      classTime: "방과후 (교실·시간 추후 안내)",
+      applyDeadline: "2026-11-27T23:59:59+09:00",   // 방과후 신청 마감
+      capacity: 0                                    // 0 = 정원 제한 없음
+    },
+    {
+      id: "FAT2-95", cls: "fat",
+      exam: "FAT 2급", round: "제95회", org: "한국공인회계사회 주관",
+      site: "https://at.kicpa.or.kr",
+      regStart: "2026-12-03", regEnd: "2026-12-10",
+      examDate: "2026-12-19", examTime: "14:00 ~ 15:30",
+      classStart: "2026-12-14", classEnd: "2026-12-19",
+      classTime: "방과후 (교실·시간 추후 안내)",
+      applyDeadline: "2026-12-11T23:59:59+09:00",
+      capacity: 0
+    }
+  ]
+};
+/* ========================================================= */
+
+const $ = s => document.querySelector(s);
+const DAY = 86400000;
+const WD = ["일","월","화","수","목","금","토"];
+const DEMO = !CONFIG.SCRIPT_URL;
+
+function kstToday(){
+  const now = new Date(Date.now() + 9*3600000);
+  return new Date(Date.UTC(now.getUTCFullYear(), now.getUTCMonth(), now.getUTCDate()));
+}
+const d = s => new Date(s + "T00:00:00Z");
+const fmt = s => { const x = d(s); return `${x.getUTCMonth()+1}월 ${x.getUTCDate()}일(${WD[x.getUTCDay()]})`; };
+const fmtShort = s => { const x = d(s); return `${x.getUTCMonth()+1}.${x.getUTCDate()}(${WD[x.getUTCDay()]})`; };
+const diff = s => Math.round((d(s) - kstToday()) / DAY);
+const closed = s => Date.now() > new Date(s.applyDeadline).getTime();
+const deadlineDate = s => new Date(new Date(s.applyDeadline).getTime() + 9*3600000).toISOString().slice(0,10);
+
+function rangeChip(start, end){
+  const a = diff(start), b = diff(end);
+  if (b < 0) return `<span class="chip done">종료</span>`;
+  if (a <= 0) return `<span class="chip hot">진행 중 · ${b === 0 ? "오늘 마감" : "D-" + b}</span>`;
+  return `<span class="chip now">D-${a}</span>`;
+}
+function dayChip(s){
+  const a = diff(s);
+  if (a < 0) return `<span class="chip done">종료</span>`;
+  if (a === 0) return `<span class="chip hot">D-DAY</span>`;
+  return `<span class="chip ${a <= 7 ? "hot" : "now"}">D-${a}</span>`;
+}
+
+let counts = {};
+
+function renderCards(){
+  $("#examCards").innerHTML = CONFIG.SESSIONS.map(s => {
+    const c = counts[s.id];
+    const cap = s.capacity ? ` / 정원 ${s.capacity}명` : "";
+    const full = s.capacity && c >= s.capacity;
+    const isClosed = closed(s);
+    return `
+    <article class="card exam ${s.cls}">
+      <span class="tag">${s.round} · 12월 시험</span>
+      <h2>${s.exam}</h2>
+      <div class="org">${s.org} · <a class="ext" href="${s.site}" target="_blank" rel="noopener">원서접수 사이트 ↗</a></div>
+      <div class="rows">
+        <div class="row"><div class="k">원서접수</div><div class="v">${fmt(s.regStart)} ~ ${fmt(s.regEnd)}<small>주관처 홈페이지에서 본인 접수</small></div>${rangeChip(s.regStart, s.regEnd)}</div>
+        <div class="row"><div class="k">시험일</div><div class="v">${fmt(s.examDate)}<small>${s.examTime}</small></div>${dayChip(s.examDate)}</div>
+        <div class="row"><div class="k">방과후수업</div><div class="v">${fmt(s.classStart)} ~ ${fmt(s.classEnd)}<small>${s.classTime}</small></div>${rangeChip(s.classStart, s.classEnd)}</div>
+        <div class="row"><div class="k">신청 마감</div><div class="v">${fmt(deadlineDate(s))}까지</div>${isClosed ? '<span class="chip done">마감</span>' : dayChip(deadlineDate(s))}</div>
+      </div>
+      <div class="foot">
+        <span class="count">${c == null ? "신청 인원 불러오는 중…" : `현재 <b>${c}</b>명 신청${cap}`}</span>
+        <button class="btn c" type="button" data-go="${s.id}" ${isClosed || full ? "disabled" : ""}>${isClosed ? "신청 마감" : full ? "정원 마감" : "이 회차 신청하기"}</button>
+      </div>
+    </article>`;
+  }).join("");
+  document.querySelectorAll("[data-go]").forEach(b => b.onclick = () => {
+    const cb = document.querySelector(`#sessionPick input[value="${b.dataset.go}"]`);
+    if (cb && !cb.disabled) cb.checked = true;
+    $("#apply").scrollIntoView({behavior:"smooth", block:"start"});
+  });
+}
+
+function renderTimeline(){
+  const ev = [];
+  CONFIG.SESSIONS.forEach(s => {
+    ev.push({date:s.regStart, cls:s.cls, text:`<b>${s.exam}</b> 원서접수 시작 <span class="sid">~ ${fmtShort(s.regEnd)}</span>`});
+    ev.push({date:deadlineDate(s), cls:s.cls, text:`<b>${s.exam}</b> 방과후수업 신청 마감`});
+    ev.push({date:s.classStart, cls:s.cls, text:`<b>${s.exam}</b> 방과후수업 <span class="sid">${fmtShort(s.classStart)} ~ ${fmtShort(s.classEnd)}</span>`});
+    ev.push({date:s.examDate, cls:s.cls, text:`<b>${s.exam}</b> ${s.round} 시험 <span class="sid">${s.examTime}</span>`});
+  });
+  ev.sort((a,b) => a.date.localeCompare(b.date));
+  const todayIso = kstToday().toISOString().slice(0,10);
+  let html = "", placed = false;
+  ev.forEach(e => {
+    if (!placed && e.date > todayIso){ html += `<li class="today-mark"><span class="d">${fmtShort(todayIso)}</span><span class="dot"></span><span class="t"><b style="color:var(--warn)">오늘</b></span></li>`; placed = true; }
+    html += `<li class="${e.cls} ${e.date < todayIso ? "past" : ""}"><span class="d">${fmtShort(e.date)}</span><span class="dot"></span><span class="t">${e.text}</span></li>`;
+  });
+  $("#timeline").innerHTML = html;
+}
+
+function renderPick(){
+  $("#sessionPick").innerHTML = CONFIG.SESSIONS.map(s => {
+    const full = s.capacity && counts[s.id] >= s.capacity;
+    const off = closed(s) || full;
+    return `<label class="opt ${s.cls} ${off ? "closed" : ""}">
+      <input type="checkbox" name="session" value="${s.id}" ${off ? "disabled" : ""}>
+      <b>${s.exam} ${s.round}</b>
+      <span>방과후 ${fmtShort(s.classStart)} ~ ${fmtShort(s.classEnd)} · 시험 ${fmtShort(s.examDate)}</span>
+      ${off ? `<span class="closed-note">${full ? "정원 마감" : "신청 마감"}</span>` : ""}
+    </label>`;
+  }).join("");
+}
+
+function fillSelect(el, arr, placeholder){
+  el.innerHTML = `<option value="">${placeholder}</option>` + arr.map(v => `<option value="${v}">${v}</option>`).join("");
+}
+const range = n => Array.from({length:n}, (_, i) => i + 1);
+function studentId(g, k, n){ return g && k && n ? `${g}${k}${String(n).padStart(2,"0")}` : ""; }
+
+/* ---------- API (구글 시트 / 미리보기) ---------- */
+const api = {
+  async get(params){
+    if (DEMO) return demo.get(params);
+    const url = CONFIG.SCRIPT_URL + "?" + new URLSearchParams(params);
+    const r = await fetch(url); return r.json();
+  },
+  async post(body){
+    if (DEMO) return demo.post(body);
+    const r = await fetch(CONFIG.SCRIPT_URL, {method:"POST", headers:{"Content-Type":"text/plain;charset=utf-8"}, body:JSON.stringify(body)});
+    return r.json();
+  }
+};
+const demo = {
+  load(){ try { return JSON.parse(localStorage.getItem("afterschool-demo") || "[]"); } catch { return []; } },
+  save(rows){ try { localStorage.setItem("afterschool-demo", JSON.stringify(rows)); } catch {} },
+  get(p){
+    const rows = this.load().filter(r => r.status === "신청");
+    if (p.action === "stats"){ const c = {}; CONFIG.SESSIONS.forEach(s => c[s.id] = rows.filter(r => r.sessionId === s.id).length); return {ok:true, counts:c}; }
+    if (p.action === "lookup") return {ok:true, items:this.load().filter(r => r.studentId === p.studentId && r.name === p.name)};
+  },
+  post(b){
+    let rows = this.load();
+    if (b.action === "apply"){
+      const results = b.sessions.map(id => {
+        const s = CONFIG.SESSIONS.find(x => x.id === id);
+        if (!s) return {id, ok:false, reason:"없는 회차"};
+        if (closed(s)) return {id, ok:false, reason:"신청 마감"};
+        if (rows.some(r => r.sessionId === id && r.studentId === b.studentId && r.status === "신청")) return {id, ok:false, reason:"이미 신청함"};
+        rows.push({sessionId:id, sessionName:`${s.exam} ${s.round}`, studentId:b.studentId, name:b.name, reg:b.reg, memo:b.memo, status:"신청", createdAt:new Date().toISOString()});
+        return {id, ok:true};
+      });
+      this.save(rows); return {ok:true, results};
+    }
+    if (b.action === "cancel"){
+      const r = rows.find(r => r.sessionId === b.sessionId && r.studentId === b.studentId && r.name === b.name && r.status === "신청");
+      if (!r) return {ok:false, error:"신청 내역을 찾을 수 없습니다."};
+      r.status = "취소"; this.save(rows); return {ok:true};
+    }
+  }
+};
+
+async function loadCounts(){
+  try { const r = await api.get({action:"stats"}); if (r.ok) counts = r.counts; }
+  catch(e){ CONFIG.SESSIONS.forEach(s => counts[s.id] = counts[s.id] ?? "–"); }
+  renderCards(); renderPick();
+}
+
+/* ---------- modal ---------- */
+function modal(title, body, ok = true){
+  $("#modalTitle").textContent = title; $("#modalBody").textContent = body;
+  $("#modalIc").textContent = ok ? "✓" : "!";
+  $("#modalIc").style.background = ok ? "var(--fat-soft)" : "var(--warn-soft)";
+  $("#modalIc").style.color = ok ? "var(--fat)" : "var(--warn)";
+  $("#modal").classList.add("show");
+}
+$("#modalClose").onclick = () => $("#modal").classList.remove("show");
+
+/* ---------- apply ---------- */
+function updateSidPreview(){
+  const sid = studentId($("#grade").value, $("#klass").value, $("#num").value);
+  $("#sidPreview").textContent = sid ? `학번 ${sid}` : "";
+}
+["#grade","#klass","#num"].forEach(s => $(s).addEventListener("change", updateSidPreview));
+
+$("#applyForm").addEventListener("submit", async e => {
+  e.preventDefault();
+  const msg = $("#formMsg"); msg.className = "msg err";
+  const sessions = [...document.querySelectorAll('#sessionPick input:checked')].map(i => i.value);
+  const g = $("#grade").value, k = $("#klass").value, n = $("#num").value, name = $("#name").value.trim();
+  if (!sessions.length) return msg.textContent = "신청할 회차를 선택해 주세요.";
+  if (!g || !k || !n) return msg.textContent = "학년·반·번호를 선택해 주세요.";
+  if (!/^[가-힣A-Za-z\s]{2,20}$/.test(name)) return msg.textContent = "이름을 정확히 입력해 주세요.";
+  if (!$("#agree").checked) return msg.textContent = "참여 약속에 체크해 주세요.";
+  msg.textContent = "";
+  const btn = $("#submitBtn"); btn.disabled = true; btn.textContent = "신청 중…";
+  try {
+    const r = await api.post({action:"apply", sessions, studentId:studentId(g,k,n), grade:g, klass:k, num:n, name,
+      reg:document.querySelector('input[name="reg"]:checked').value, memo:$("#memo").value.trim()});
+    if (!r.ok) throw new Error(r.error || "신청에 실패했습니다.");
+    const label = id => { const s = CONFIG.SESSIONS.find(x => x.id === id); return s ? `${s.exam} ${s.round}` : id; };
+    const okList = r.results.filter(x => x.ok).map(x => "• " + label(x.id));
+    const failList = r.results.filter(x => !x.ok).map(x => `• ${label(x.id)} — ${x.reason}`);
+    let body = "";
+    if (okList.length) body += `${name} 학생, 아래 회차 신청이 완료되었습니다.\n${okList.join("\n")}`;
+    if (failList.length) body += `${body ? "\n\n" : ""}신청되지 않은 회차\n${failList.join("\n")}`;
+    body += `\n\n※ 자격시험 원서접수는 주관처 홈페이지에서 따로 해야 합니다.`;
+    modal(okList.length ? "신청 완료!" : "신청되지 않았어요", body, okList.length > 0);
+    if (okList.length){ $("#applyForm").reset(); updateSidPreview(); }
+    loadCounts();
+  } catch(err){
+    modal("신청 오류", err.message + "\n잠시 후 다시 시도하거나 선생님께 알려 주세요.", false);
+  } finally { btn.disabled = false; btn.textContent = "신청하기"; }
+});
+
+/* ---------- lookup / cancel ---------- */
+async function doLookup(){
+  const box = $("#lookupResult");
+  const sid = studentId($("#lgrade").value, $("#lklass").value, $("#lnum").value), name = $("#lname").value.trim();
+  if (!sid || !name){ box.innerHTML = `<div class="msg err">학년·반·번호와 이름을 입력해 주세요.</div>`; return; }
+  box.innerHTML = `<div class="sid">조회 중…</div>`;
+  try {
+    const r = await api.get({action:"lookup", studentId:sid, name});
+    if (!r.ok) throw new Error(r.error);
+    if (!r.items.length){ box.innerHTML = `<div class="sid">신청 내역이 없습니다. 학번과 이름을 확인해 주세요.</div>`; return; }
+    box.innerHTML = r.items.map(it => {
+      const s = CONFIG.SESSIONS.find(x => x.id === it.sessionId) || {cls:"", exam:it.sessionName, round:""};
+      const canCancel = it.status === "신청" && s.applyDeadline && !closed(s);
+      const when = it.createdAt ? new Date(it.createdAt).toLocaleString("ko-KR", {timeZone:"Asia/Seoul", month:"numeric", day:"numeric", hour:"2-digit", minute:"2-digit"}) : "";
+      return `<div class="ritem ${s.cls} ${it.status === "취소" ? "cancel" : ""}">
+        <div><div class="rt">${s.exam} ${s.round}</div><div class="rs">${it.status}${when ? " · " + when : ""} · 원서접수 ${it.reg || "-"}</div></div>
+        ${canCancel ? `<button class="btn ghost sm" data-cancel="${it.sessionId}">신청 취소</button>` : `<span class="chip">${it.status}</span>`}
+      </div>`;
+    }).join("");
+    box.querySelectorAll("[data-cancel]").forEach(b => b.onclick = async () => {
+      if (b.dataset.confirm !== "1"){ b.dataset.confirm = "1"; b.textContent = "정말 취소할까요?"; b.style.color = "var(--warn)"; return; }
+      b.disabled = true;
+      const r = await api.post({action:"cancel", sessionId:b.dataset.cancel, studentId:sid, name});
+      if (!r.ok) modal("취소 오류", r.error || "취소하지 못했습니다.", false);
+      await doLookup(); loadCounts();
+    });
+  } catch(err){ box.innerHTML = `<div class="msg err">조회에 실패했습니다. 잠시 후 다시 시도해 주세요.</div>`; }
+}
+$("#lookupBtn").onclick = doLookup;
+$("#lname").addEventListener("keydown", e => { if (e.key === "Enter") doLookup(); });
+
+/* ---------- init ---------- */
+(function init(){
+  $("#schoolName").textContent = CONFIG.SCHOOL;
+  $("#contactLine").textContent = CONFIG.CONTACT;
+  const t = kstToday();
+  $("#todayLabel").textContent = `오늘 ${t.getUTCFullYear()}년 ${fmt(t.toISOString().slice(0,10))}`;
+  $("#footer").textContent = `© ${t.getUTCFullYear()} ${CONFIG.SCHOOL}`;
+  $("#demoBanner").hidden = !DEMO;
+  [["#grade","#lgrade",CONFIG.GRADES,"학년"],["#klass","#lklass",range(CONFIG.CLASSES),"반"],["#num","#lnum",range(CONFIG.NUMBERS),"번호"]]
+    .forEach(([a,b,arr,p]) => { fillSelect($(a), arr, p); fillSelect($(b), arr, p); });
+  renderCards(); renderTimeline(); renderPick();
+  loadCounts();
+})();
+</script>
+</body>
+</html>
